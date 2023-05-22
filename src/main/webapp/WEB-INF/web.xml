@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+	http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" 
+	id="WebApp_ID" version="4.0">
+
+  <display-name>Membership ShoppingMall</display-name>
+
+	<!-- 초기 로딩 페이지 -->
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+
+
+	<!-- 서블릿 + URL 매핑 정보 설정[@WwebServlet방식으로 구현] -->
+    <!-- 1. aliases 설정 -->
+<!-- 
+    <servlet>
+        <servlet-name>sqlDriverLoader</servlet-name>
+        <servlet-class>com.javalab.shopping.util.SqlDriverLoader</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+ -->    
+<!-- 
+    <servlet-mapping>
+        <servlet-name>welcome</servlet-name>
+        <url-pattern>/index</url-pattern>
+    </servlet-mapping>
+ -->
+   	<!-- 서블릿 컨텍스트 리스너[기능없음, 단순테스트] -->
+   	<listener>
+   		<listener-class>com.javalab.shopping.util.ServletContextListenerImpl</listener-class>
+   	</listener>
+   	<!-- HttpSession 리스너[기능없음, 단순테스트] -->
+   	<listener>
+   		<listener-class>com.javalab.shopping.util.HttpSessionListenerImpl</listener-class>
+   	</listener>   	
+   	
+	<!-- 한글 인코딩 필터[@WebFilter 방식으로 구현] -->	 
+	<!-- 
+	<filter>
+		<filter-name>EncodingFilter</filter-name>
+		<filter-class>com.javalab.shopping.util.EncodingFilter</filter-class>
+		<init-param>
+			<param-name>encodingType</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>EncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping> 
+     -->
+     
+    <!-- 특정 경로의 자원(서블릿,JSP)을 요청할 경우 로그인 유무 확인 필터
+    	/mypage로 시작하는 url 또는 /admin으로 시작하는 url은
+    	여기에 설정한 필터가 적용되도록 한다.
+    	
+    	여기에 로그인 필터를 설정하면 서블릿에서 로그인 유무 확인할 필요없이
+    	필터가 확인해서 로그인 안한 사용자는 로그인 화면으로 강제 이동시킴. -->
+    <filter>
+    	<filter-name>LoginChecker</filter-name>
+    	<filter-class>com.javalab.shopping.filter.LoginCheckFilter</filter-class>
+    </filter>
+    <filter-mapping>
+    	<filter-name>LoginChecker</filter-name>
+    	<url-pattern>/mypage/*</url-pattern>
+    </filter-mapping>
+    
+</web-app>
